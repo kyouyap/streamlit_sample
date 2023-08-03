@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==3.1.2"
+psycopg2 = "*"
+langchain = "*"
+streamlit = "*"
+openai = "*"
+forex-python = "*"
+tiktoken = "*"
+streamlit-chat = "*"
+bs4 = "*"
+youtube-transcript-api = "*"
+pytube = "*"
+pypdf2 = "*"
+qdrant-client = "*"
+
+[dev-packages]
+autopep8 = "*"
+flake8 = "*"
+
+[requires]
+python_version = "3.9"
+python_full_version = "3.9.6"

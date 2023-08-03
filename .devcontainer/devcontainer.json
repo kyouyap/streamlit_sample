@@ -1,0 +1,10 @@
+{
+    "name": "Streamlit Project",
+    "dockerFile": "Dockerfile",
+    "forwardPorts": [8501],
+    "postCreateCommand": "pipenv install --deploy --ignore-pipfile",
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": []
+}
