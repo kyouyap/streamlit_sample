@@ -17,10 +17,12 @@
 - `code_interpreter.py`: ユーザーからのコードスニペットを解釈し、適切なレスポンスを生成するためのモジュール。
 - `db_manager.py`: データベース操作を担当するモジュール。
 - `token_cost_process.py`: トークンのコストを処理するスクリプト。
+- `.env_sample`:環境変数を管理するファイル。
 
 ## セットアップ
 
-このプロジェクトではpipenv,devcontainerを使って依存関係を管理しています。プロジェクトのセットアップはdevcontainerを作ることで行えます。
+このプロジェクトではpipenv,devcontainerを使って依存関係を管理しています。プロジェクトのセットアップは.envファイルを作成し、devcontainerを作ることで行えます。
+streamlitでアプリを動かすには`streamlit run hogehoge.py`で実行してください。
 
 
 ## 注意
