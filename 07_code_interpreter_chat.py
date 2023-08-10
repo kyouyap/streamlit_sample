@@ -81,7 +81,6 @@ class ChatManager:
             chat_container (streamlit.delta_generator.DeltaGenerator): メッセージ表示に使うコンテナ。
         """
         for chat_message in st.session_state.chat_messages:
-            chat_message_id = chat_message[0]
             category = chat_message[2]
             content = chat_message[3]
             if category == "user":
@@ -90,11 +89,6 @@ class ChatManager:
             else:
                 with st.chat_message("assistant"):
                     st.write(content)
-                    # ダウンロード可能なファイルを表示
-                    files = self.db.get_generated_files(chat_message_id)
-                    for file in files:
-                        data = file[3]
-                        file_name = file
 
     def submit_message(self, chat_container, chat_id):
         """ユーザからのメッセージを受け取り、それに応じて応答を生成して表示する。

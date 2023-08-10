@@ -1,10 +1,18 @@
 {
-    "name": "Streamlit Project",
+    "name": "chainlit Project",
     "dockerFile": "Dockerfile",
     "forwardPorts": [8501],
-    "postCreateCommand": "pipenv install --deploy --ignore-pipfile",
+    "postCreateCommand": "poetry install",
     "settings": {
         "terminal.integrated.shell.linux": "/bin/bash"
     },
-    "extensions": []
+    "extensions": [
+		"GitHub.copilot",
+		"GitHub.copilot-chat",
+		"ms-python.python",
+		"VisualStudioExptTeam.vscodeintellicode",
+		"Meezilla.json",
+		"ms-python.flake8",
+		"ms-python.black-formatter"
+	]
 }

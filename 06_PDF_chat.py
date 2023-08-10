@@ -21,10 +21,7 @@ def init_page():
     """
     Streamlitのページを初期化する関数。
     """
-    st.set_page_config(
-        page_title="Ask My PDF(s)",
-        page_icon="🤗"
-    )
+    st.set_page_config(page_title="Ask My PDF(s)", page_icon="🤗")
     st.sidebar.title("Nav")
     st.session_state.costs = []
 
@@ -40,9 +37,11 @@ def select_model():
         st.session_state.model_name = "gpt-3.5-turbo-16k"
     else:
         st.session_state.model_name = "gpt-4"
-    
+
     # 300: 本文以外の指示のトークン数 (以下同じ)
-    st.session_state.max_token = OpenAI.modelname_to_contextsize(st.session_state.model_name) - 300
+    st.session_state.max_token = (
+        OpenAI.modelname_to_contextsize(st.session_state.model_name) - 300
+    )
     return ChatOpenAI(temperature=0, model_name=st.session_state.model_name)
 
 
@@ -50,13 +49,10 @@ def get_pdf_text():
     """
     PDFファイルからテキストを抽出する関数。
     """
-    uploaded_file = st.file_uploader(
-        label='Upload your PDF here😇',
-        type='pdf'
-    )
+    uploaded_file = st.file_uploader(label="Upload your PDF here😇", type="pdf")
     if uploaded_file:
         pdf_reader = PdfReader(uploaded_file)
-        text = '\n\n'.join([page.extract_text() for page in pdf_reader.pages])
+        text = "\n\n".join([page.extract_text() for page in pdf_reader.pages])
         text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
             model_name="text-embedding-ada-002",
             # 適切な chunk size は質問対象のPDFによって変わるため調整が必要
@@ -87,12 +83,10 @@ def load_qdrant():
             collection_name=COLLECTION_NAME,
             vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
         )
-        print('collection created')
+        print("collection created")
 
     return Qdrant(
-        client=client,
-        collection_name=COLLECTION_NAME, 
-        embeddings=OpenAIEmbeddings()
+        client=client, collection_name=COLLECTION_NAME, embeddings=OpenAIEmbeddings()
     )
 
 
@@ -104,8 +98,7 @@ def build_vector_store(pdf_text):
     qdrant.add_texts(pdf_text)
 
 
-
-def build_qa_model(llm):
+def build_qa_model(llm):  # noqa
     """
     質問応答モデルを構築する関数。
     """
@@ -114,14 +107,14 @@ def build_qa_model(llm):
         # "mmr",  "similarity_score_threshold" などもある
         search_type="similarity",
         # 文書を何個取得するか (default: 4)
-        search_kwargs={"k":10}
+        search_kwargs={"k": 10},
     )
     return RetrievalQA.from_chain_type(
         llm=llm,
-        chain_type="stuff", 
+        chain_type="stuff",
         retriever=retriever,
         return_source_documents=True,
-        verbose=True
+        verbose=True,
     )
 
 
@@ -190,12 +183,12 @@ def main():
     elif selection == "Ask My PDF(s)":
         page_ask_my_pdf()
 
-    costs = st.session_state.get('costs', [])
+    costs = st.session_state.get("costs", [])
     st.sidebar.markdown("## Costs")
     st.sidebar.markdown(f"**Total cost: ${sum(costs):.5f}**")
     for cost in costs:
         st.sidebar.markdown(f"- ${cost:.5f}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
